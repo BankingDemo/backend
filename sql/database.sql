@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.43, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: bankingdemo
+-- Host: localhost    Database: techstock
 -- ------------------------------------------------------
 -- Server version	5.5.43-0ubuntu0.14.04.1
 
@@ -16,12 +16,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `bankingdemo`
+-- Current Database: `techstock`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bankingdemo` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `techstock` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `bankingdemo`;
+USE `techstock`;
 
 --
 -- Table structure for table `ACCOUNTS`

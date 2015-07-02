@@ -1,47 +1,111 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.redhat.banking</groupId>
+	<artifactId>restapi</artifactId>
+	<version>0.1</version>
+	<packaging>war</packaging>
+	<name>restapi</name>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.redhat</groupId>
-    <artifactId>techstock-demo</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>${project.artifactId}</name>
+	<repositories>
+		<repository>
+			<id>fusesource.releases</id>
+			<name>FuseSource Release Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/fs-releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>fusesource.ea</id>
+			<name>FuseSource Early Access Release Repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/ea/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 
-    <prerequisites>
-        <maven>${maven-version}</maven>
-    </prerequisites>
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring-version>3.2.8.RELEASE</spring-version>
+		<log4j-version>1.2.17</log4j-version>
+		<slf4j-version>1.7.5</slf4j-version>
+		<camel-version>2.15.1.redhat-620117	</camel-version>
+		<xbean-spring-version>3.15</xbean-spring-version>
+	</properties>
 
-    <modules>
-        <!-- Parents -->
-        <module>plugins-parent</module>
-        <module>osgi-plugins-parent</module>
-        <module>camel-parent</module>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<warName>ROOT</warName>
+				</configuration>
+			</plugin>
 
-        <!-- Bundles -->
-        <module>customer-services</module>
+		</plugins>
+	</build>
 
-        <!-- Feature -->
-        <module>techstock-features</module>
-    </modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
 
-    <properties>
-        <maven-version>3.2.0</maven-version>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-servlet</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-sql</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
 
-        <!-- Project settings -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java-runtime>1.7</java-runtime>
-    </properties>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-version}</version>
+		</dependency>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>snapshots</id>
-            <name>libs-snapshot</name>
-            <url>file:${user.home}/.m2/repository</url>
-        </snapshotRepository>
-    </distributionManagement>
-
+	</dependencies>
 </project>

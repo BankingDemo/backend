@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:jboss/datasources/MySqlDS" />
+	</bean>
+	<bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+		<dataFormats>
+			<json id="jackson" library="Jackson" />
+		</dataFormats>
+
+		<route id="getCustomer">
+			<from uri="servlet:/getCustomer" />
+			<to uri="sql:SELECT C.*, A.amount FROM CUSTOMERS C LEFT JOIN ACCOUNTS A ON C.id = A.customerid WHERE C.username = :#username" />
+		</route>
+
+		<route id="getCurrentBalance">
+			<from uri="servlet:/getCurrentBalance" />
+			<to uri="sql: SELECT A.amount FROM CUSTOMERS C LEFT JOIN ACCOUNTS A ON C.id = A.customerid WHERE C.id = :#id" />
+		</route>
+
+		<route id="getCustomers">
+			<from uri="servlet:/getCustomers" />
+			<to uri="sql:SELECT * FROM CUSTOMERS" />
+		</route>
+
+		<route id="getTransactions">
+			<from uri="servlet:/getTransactions" />
+			<to uri="sql:SELECT * FROM TRANSACTIONS WHERE fromId = :#id || toId = :#id ORDER BY txdate DESC" />
+		</route>
+
+		<route id="createCustomer">
+			<from uri="servlet:/createCustomer" />
+			<setHeader headerName="CamelSqlRetrieveGeneratedKeys">
+                <constant>true</constant>
+            </setHeader>
+			<unmarshal ref="jackson" />
+			<to uri="sql:INSERT INTO CUSTOMERS(firstname, surname, address) VALUES (:#firstname, :#surname, :#address)" />
+			<to uri="sql:INSERT INTO ACCOUNTS(customerid, amount) VALUES (:#${header.CamelSqlGeneratedKeyRows.get(0).get('GENERATED_KEY')}, 0)" />
+		</route>
+
+		<route id="withdrawMoney">
+			<from uri="servlet:/withdrawMoney" />
+			<unmarshal ref="jackson" />
+			<to uri="sql:INSERT INTO TRANSACTIONS(fromid, toid, payee, amount, details) VALUES (:#fromId, :#toId, :#payee, :#amount, 'Withdrawal')" />
+			<to uri="sql:UPDATE ACCOUNTS SET amount = amount - :#amount WHERE customerid = :#fromid" />
+		</route>
+
+		<route id="depositMoney">
+			<from uri="servlet:/depositMoney" />
+			<unmarshal ref="jackson" />
+			<to uri="sql:INSERT INTO TRANSACTIONS(fromid, toid, payee, amount, details) VALUES (:#fromId, :#toId, :#payee, :#amount, 'Deposit')" />
+			<to uri="sql:UPDATE ACCOUNTS SET amount = amount + :#amount WHERE customerid = :#toid" />
+		</route>
+
+		<route id="transferMoney">
+			<from uri="servlet:/transferMoney" />
+			<unmarshal ref="jackson" />
+			<to uri="sql:INSERT INTO TRANSACTIONS(fromid, toid, payee, amount, details) VALUES (:#fromId, :#toId, :#payee, :#amount, 'Transfer')" />
+			<to uri="sql:UPDATE ACCOUNTS SET amount = amount - :#amount WHERE customerid = :#fromid" />
+			<to uri="sql:UPDATE ACCOUNTS SET amount = amount + :#amount WHERE customerid = :#toid" />
+		</route>
+
+	</camelContext>
+</beans>
