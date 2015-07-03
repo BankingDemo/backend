@@ -18,8 +18,8 @@ CREATE TABLE CUSTOMERS (
 
 CREATE TABLE TRANSACTIONS (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  fromid int(11) unsigned NOT NULL,
-  payee int(11) unsigned NOT NULL,
+  fromid int(11) unsigned NULL,
+  payee int(11) unsigned NULL,
   amount decimal(10, 2) NOT NULL,
   details varchar(255),
   txdate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
