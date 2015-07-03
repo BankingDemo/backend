@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.jdbc.datasource.init.ScriptStatementFailedException;
@@ -18,6 +19,8 @@ import org.springframework.jdbc.datasource.init.ScriptStatementFailedException;
 @Singleton
 @Startup
 public class DatabasePopulator {
+	private final Logger logger = Logger.getLogger(DatabasePopulator.class);
+
 	@PostConstruct
 	private void startup() throws NamingException, SQLException { 
 		Context jndiContext = new InitialContext();
@@ -30,7 +33,7 @@ public class DatabasePopulator {
 		try {
 			rdp.populate(connection);
 		} catch(ScriptStatementFailedException e) {
-			/* do nothing */
+			logger.error(e);
 		}
 	}
 }
