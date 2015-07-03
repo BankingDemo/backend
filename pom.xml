@@ -33,12 +33,12 @@
 	</repositories>
 
 	<properties>
-	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-version>3.2.8.RELEASE</spring-version>
 		<log4j-version>1.2.17</log4j-version>
 		<slf4j-version>1.7.5</slf4j-version>
-		<camel-version>2.15.1.redhat-620117	</camel-version>
-		<xbean-spring-version>3.15</xbean-spring-version>
+		<camel-version>2.15.1.redhat-620117</camel-version>
+		<jboss-ejb-version>1.0.2.Final-redhat-2</jboss-ejb-version>
 	</properties>
 
 	<build>
@@ -64,6 +64,14 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<version>${jboss-ejb-version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>

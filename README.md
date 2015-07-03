@@ -1,7 +1,7 @@
 # BankingApplication
 A generic banking backend, REST interfaces using Apache Camel
 
-#DB Schema (See sql folder)
+#DB Schema (See src/main/resources/import.sql)
 Table: Customer 
 Columns: Id, FirstName, Surname, Address, Email, Username
 
