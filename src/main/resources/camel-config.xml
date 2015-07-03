@@ -21,21 +21,25 @@
 		<route id="getCustomer">
 			<from uri="servlet:/getCustomer" />
 			<to uri="sql:SELECT C.*, A.amount FROM CUSTOMERS C LEFT JOIN ACCOUNTS A ON C.id = A.customerid WHERE C.username = :#username" />
+			<marshal ref="jackson" />
 		</route>
 
 		<route id="getCurrentBalance">
 			<from uri="servlet:/getCurrentBalance" />
 			<to uri="sql: SELECT A.amount FROM CUSTOMERS C LEFT JOIN ACCOUNTS A ON C.id = A.customerid WHERE C.id = :#id" />
+			<marshal ref="jackson" />
 		</route>
 
 		<route id="getCustomers">
 			<from uri="servlet:/getCustomers" />
 			<to uri="sql:SELECT * FROM CUSTOMERS" />
+			<marshal ref="jackson" />
 		</route>
 
 		<route id="getTransactions">
 			<from uri="servlet:/getTransactions" />
 			<to uri="sql:SELECT * FROM TRANSACTIONS WHERE fromId = :#id || payee = :#id ORDER BY txdate DESC" />
+			<marshal ref="jackson" />
 		</route>
 
 		<route id="createCustomer">
@@ -46,6 +50,7 @@
 			<unmarshal ref="jackson" />
 			<to uri="sql:INSERT INTO CUSTOMERS(firstname, surname, address) VALUES (:#firstname, :#surname, :#address)" />
 			<to uri="sql:INSERT INTO ACCOUNTS(customerid, amount) VALUES (:#${header.CamelSqlGeneratedKeyRows.get(0).get('GENERATED_KEY')}, 0)" />
+			<marshal ref="jackson" />
 		</route>
 
 		<route id="withdrawMoney">
@@ -53,6 +58,7 @@
 			<unmarshal ref="jackson" />
 			<to uri="sql:INSERT INTO TRANSACTIONS(fromid, amount, details) VALUES (:#fromid, :#amount, 'Withdrawal')" />
 			<to uri="sql:UPDATE ACCOUNTS SET amount = amount - :#amount WHERE customerid = :#fromid" />
+			<marshal ref="jackson" />
 		</route>
 
 		<route id="depositMoney">
@@ -60,6 +66,7 @@
 			<unmarshal ref="jackson" />
 			<to uri="sql:INSERT INTO TRANSACTIONS(payee, amount, details) VALUES (:#toid, :#amount, 'Deposit')" />
 			<to uri="sql:UPDATE ACCOUNTS SET amount = amount + :#amount WHERE customerid = :#toid" />
+			<marshal ref="jackson" />
 		</route>
 
 		<route id="transferMoney">
@@ -68,6 +75,7 @@
 			<to uri="sql:INSERT INTO TRANSACTIONS(fromid, payee, amount, details) VALUES (:#fromid, :#payee, :#amount, 'Transfer')" />
 			<to uri="sql:UPDATE ACCOUNTS SET amount = amount - :#amount WHERE customerid = :#fromid" />
 			<to uri="sql:UPDATE ACCOUNTS SET amount = amount + :#amount WHERE customerid = :#payee" />
+			<marshal ref="jackson" />
 		</route>
 
 	</camelContext>
