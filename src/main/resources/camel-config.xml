@@ -38,7 +38,7 @@
 
 		<route id="getTransactions">
 			<from uri="servlet:/getTransactions" />
-			<to uri="sql:SELECT * FROM TRANSACTIONS WHERE fromId = :#id || payee = :#id ORDER BY txdate DESC" />
+			<to uri="sql:SELECT id, fromid, payee, amount, details, DATE_FORMAT(txdate, &quot;%d/%m/%Y %H:%m:%S&quot;) as txdate from TRANSACTIONS WHERE fromId = :#id || payee = :#id ORDER BY txdate DESC" />
 			<marshal ref="jackson" />
 		</route>
 
