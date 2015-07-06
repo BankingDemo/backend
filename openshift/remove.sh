@@ -6,4 +6,4 @@ cd $(dirname $0)
 
 oc delete all -l service=mysql
 oc delete all -l service=bankingapplication
-
+oc delete imagestream eap-openshift

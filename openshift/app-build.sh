@@ -26,8 +26,7 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        namespace: openshift
-        name: jboss-eap6-openshift:6.4
+        name: eap-openshift:latest
   source:
     type: Git
     git:
