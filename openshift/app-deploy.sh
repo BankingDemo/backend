@@ -58,7 +58,6 @@ items:
           ports:
           - containerPort: 8778
             name: jolokia
-          ports:
           - containerPort: 8080
             hostPort: 9000
           env:
