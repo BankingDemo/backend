@@ -1,39 +1,28 @@
-# BankingApplication
-A generic banking backend, REST interfaces using Apache Camel
+# BankingDemo / backend
+REST interfaces implementing using JBoss Fuse 6.2 (Apache Camel).
 
-#DB Schema (See src/main/resources/import.sql)
-Table: Customer 
-Columns: Id, FirstName, Surname, Address, Email, Username
+# Database schema
+(See src/main/resources/import.sql)
 
-Table: Account 
-Columns: Id, CustomerId, Amount (Balance)
+## Table: customer
+Columns: id, firstname, surname, address, email, username, balance
 
-Table: Transactions 
-Columns: Id, FromId, ToId, Amount, Payee, Details, TxDate
+## Table: transactions
+Columns: id, fromid, payee, amount, details, txdate
 
-#REST
-* createCustomer
-** POST: http://localhost:8080/createcustomer / { "firstname":"joe", "surname":"bloggs", "address":"2 some road" }
+# REST API
 
-* getCustomer
-** GET: http://localhost:8080/getcustomer?username=joe
+## getCustomer
+POST /getCustomer?username=\<username\>
 
-* getCustomers
-** GET: http://localhost:8080/getcustomers
+## getCurrentBalance
+GET /getCurrentBalance?id=\<id\>
 
-* depositMoney
-** POST: http://localhost:8080/depositmoney / { fromId:1, payee:"10-223", "amount":50, "operation": "-" }
-*** curl -H "Content-Type: application/json" -X POST -d '{"fromId":"-1", "toId":"2", "amount":"250", "payee":"Employer Cash Bonus"}' http://localhost:8080/depositmoney
+## getTransactions
+GET /getTransactions?id=\<id\>
 
-* withdrawMoney
-** POST: http://localhost:8080/withdrawmoney / { fromId:1, toId=99, payee:"Pret a Manger", "amount":3.5,  }
-*** curl -H "Content-Type: application/json" -X POST -d '{"fromId":"2", "toId":"-1", "amount":"50", "payee":"ATM, Regent Street"}' http://localhost:8080/withdrawmoney
-
-* getCurrentBalance
-** GET: http://localhost:8080/getcurrentbalance?id=1
-
-* transferMoney
-** POST: http://localhost:8080/transfermoney / { "fromId":1, "toId":2, payee="Acct 10 20 30", amount:100 }
-
-* getTransactions
-** GET: http://localhost:8080/gettransactions?id=10
+## transferMoney
+POST /transferMoney / { "fromid": 1, "payee": 2, "amount": 10 }
+```
+curl -H "Content-Type: application/json" -X POST -d '{ "fromid": 1, "payee": 2, "amount": 10 }' http://localhost:8080/transferMoney
+```
