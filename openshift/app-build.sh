@@ -35,6 +35,10 @@ spec:
   output:
     to:
       name: bankingapplication
+  triggers:
+  - github:
+      secret: secret
+    type: GitHub
 EOF
 
 oc start-build bankingapplication
