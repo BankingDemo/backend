@@ -32,6 +32,7 @@ spec:
     git:
       uri: $GITURL
       ref: master
+#      ref: Feature-SaveCustomerDetails
   output:
     to:
       name: bankingapplication
