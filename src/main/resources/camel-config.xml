@@ -28,6 +28,13 @@
 			<marshal ref="jackson" />
 		</route>
 
+		<route id="updateCustomer">
+			<from uri="servlet:/updateCustomer" />
+			<unmarshal ref="jackson" />
+			<to uri="sql:UPDATE customers SET firstname = :#firstname, surname = :#surname, address = :#address, email = :#email WHERE id = :#id" />
+			<marshal ref="jackson" />
+		</route>
+
 		<route id="getCurrentBalance">
 			<from uri="servlet:/getCurrentBalance" />
 			<to uri="sql: SELECT balance AS amount FROM customers WHERE id = :#id" />

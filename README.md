@@ -15,6 +15,12 @@ Columns: id, fromid, payee, amount, details, txdate
 ## getCustomer
 POST /getCustomer?username=\<username\>
 
+## updateCustomer
+POST /updateCustomer?id=\<id\> / { "firstname": "Joe", "surname": "Bloggs", "address": "London", "email": "joe@bloggs.com" }
+```
+curl -H "Content-Type: application/json" -X POST -d '{ "firstname": "Joe", "surname": "Bloggs", "address": "London", "email": "joe@bloggs.com" }' http://localhost:8080/updateCustomer?id=1
+```
+
 ## getCurrentBalance
 GET /getCurrentBalance?id=\<id\>
 
