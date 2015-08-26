@@ -1,4 +1,4 @@
-CREATE TABLE customers (
+CREATE TABLE IF NOT EXISTS customers (
   id int unsigned NOT NULL AUTO_INCREMENT,
   firstname varchar(255) NOT NULL DEFAULT '',
   surname varchar(255) NOT NULL DEFAULT '',
@@ -10,7 +10,7 @@ CREATE TABLE customers (
   UNIQUE KEY k_username(username)
 ) DEFAULT CHARSET=utf8;
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
   id int unsigned NOT NULL AUTO_INCREMENT,
   fromid int unsigned NULL,
   payee int unsigned NULL,
@@ -20,8 +20,8 @@ CREATE TABLE transactions (
   PRIMARY KEY(id)
 ) DEFAULT CHARSET=utf8;
 
-INSERT INTO customers VALUES (1, 'Gareth', 'Healy', '200 Fowler Avenue, Farnborough', 'ghealy@redhat.com', 'ghealy', 100.00);
-INSERT INTO customers VALUES (2, 'Nabeel','Saad', '64 Baker Street, London', 'nsaad@redhat.com', 'nsaad', 100.00);
-INSERT INTO customers VALUES (3, 'Costas', 'Sterpis', '200 Fowler Avenue, Farnborough', 'csterpis@redhat.com','sterpis', 100.00);
-INSERT INTO customers VALUES (4, 'Chris', 'Milsted', '200 Fowler Avenue, Farnborough', 'cmilsted@redhat.com', 'cmilsted', 100.00);
-INSERT INTO customers VALUES (5, 'Jim', 'Minter', '64 Baker Street, London', 'jminter@redhat.com', 'jminter', 100.00);
+INSERT IGNORE INTO customers VALUES (1, 'Gareth', 'Healy', '200 Fowler Avenue, Farnborough', 'ghealy@redhat.com', 'ghealy', 100.00);
+INSERT IGNORE INTO customers VALUES (2, 'Nabeel','Saad', '64 Baker Street, London', 'nsaad@redhat.com', 'nsaad', 100.00);
+INSERT IGNORE INTO customers VALUES (3, 'Costas', 'Sterpis', '200 Fowler Avenue, Farnborough', 'csterpis@redhat.com','sterpis', 100.00);
+INSERT IGNORE INTO customers VALUES (4, 'Chris', 'Milsted', '200 Fowler Avenue, Farnborough', 'cmilsted@redhat.com', 'cmilsted', 100.00);
+INSERT IGNORE INTO customers VALUES (5, 'Jim', 'Minter', '64 Baker Street, London', 'jminter@redhat.com', 'jminter', 100.00);

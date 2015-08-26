@@ -9,36 +9,38 @@
 
 	<repositories>
 		<repository>
-			<id>fusesource.releases</id>
-			<name>FuseSource Release Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/fs-releases/</url>
+			<id>jboss-fuse-repository</id>
+			<url>http://repo.fusesource.com/nexus/content/groups/public/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</repository>
-		<repository>
-			<id>fusesource.ea</id>
-			<name>FuseSource Early Access Release Repository</name>
-			<url>https://repository.jboss.org/nexus/content/groups/ea/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
 		</repository>
 	</repositories>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.bom.eap</groupId>
+				<artifactId>jboss-javaee-6.0-with-logging</artifactId>
+				<version>6.4.0.GA</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.fuse.bom</groupId>
+				<artifactId>jboss-fuse-parent</artifactId>
+				<version>6.2.0.redhat-133</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-version>3.2.8.RELEASE</spring-version>
-		<log4j-version>1.2.17</log4j-version>
-		<slf4j-version>1.7.5</slf4j-version>
-		<camel-version>2.15.1.redhat-620117</camel-version>
-		<jboss-ejb-version>1.0.2.Final-redhat-2</jboss-ejb-version>
 	</properties>
 
 	<build>
@@ -46,7 +48,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>3.1</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
@@ -67,53 +69,31 @@
 		<dependency>
 			<groupId>org.jboss.spec.javax.ejb</groupId>
 			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
-			<version>${jboss-ejb-version}</version>
 			<scope>provided</scope>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring-version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>
-			<version>${camel-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
-			<version>${camel-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-servlet</artifactId>
-			<version>${camel-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-sql</artifactId>
-			<version>${camel-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-jackson</artifactId>
-			<version>${camel-version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j-version}</version>
-		</dependency>
-
 	</dependencies>
 </project>
